@@ -13,7 +13,7 @@ export default class NT {
     private connected: boolean = false;
     private onCalls: any = {
         connect: () => {},
-        disconnect: () => {}
+        disconnect: () => {},
     };
     private robot: any = {};
     private profileData: any;

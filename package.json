@@ -4,18 +4,68 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "electron ."
+        "start": "electron .",
+        "dev": "electron . --dev",
+        "build-mac": "electron-builder build --mac --publish never",
+        "deploy-mac": "electron-builder build --mac --publish always",
+        "build-win": "electron-builder build --win --publish never",
+        "deploy-win": "electron-builder build --win --publish always",
+        "build-linux": "electron-builder build --linux --publish never",
+        "deploy-linux": "electron-builder build --linux --publish always",
+        "deploy": "electron-builder build --linux --win --publish always",
+        "build": "electron-builder build --linux --win --publish never"
     },
     "keywords": [],
     "author": "",
-    "license": "ISC",
+    "license": "MIT",
     "devDependencies": {
-        "electron": "^8.1.0"
+        "@types/discord-rpc": "3.0.4",
+        "@types/materialize-css": "1.0.8",
+        "@types/mousetrap": "1.6.3",
+        "@types/node": "^12.12.29",
+        "electron": "11.2.1",
+        "electron-builder": "22.9.1"
     },
     "dependencies": {
-        "@types/mousetrap": "^1.6.3",
-        "dotenv": "^8.2.0",
-        "mousetrap": "^1.6.5",
+        "dotenv": "8.2.0",
+        "electron-log": "4.3.0",
+        "electron-store": "6.0.1",
+        "electron-updater": "4.3.5",
+        "mousetrap": "1.6.5",
         "wpilib-nt-client": "^1.7.2"
+    },
+    "build": {
+        "appId": "com.cavineers.dank",
+        "productName": "DANK",
+        "copyright": "Copyright © 2021 FRC Team 4541",
+        "generateUpdatesFilesForAllChannels": true,
+        "win": {
+            "target": "nsis",
+            "icon": "img/4541-logo.ico",
+            "asar": true
+        },
+        "linux": {
+            "target": "deb",
+            "icon": "img/4541-logo.png",
+            "synopsis": "DANK",
+            "category": "Game"
+        },
+        "nsis": {
+            "installerIcon": "img/4541-logo-2.ico",
+            "installerHeaderIcon": "img/4541-logo.ico",
+            "license": "license.txt",
+            "deleteAppDataOnUninstall": true,
+            "runAfterFinish": true,
+            "createDesktopShortcut": "always",
+            "createStartMenuShortcut": true,
+            "menuCategory": "4541 Cavineers",
+            "shortcutName": "DANK"
+        },
+        "publish": {
+            "provider": "github",
+            "releaseType": "release",
+            "vPrefixedTagName": true,
+            "publishAutoUpdate": true
+        }
     }
 }

@@ -1,9 +1,13 @@
 {
     "compilerOptions": {
-        "target": "ES3",
-        "watch": true,
-        "lib": ["dom", "es2017"],
-        "removeComments": true,
-        "rootDir": "."
+        "target": "ES2015",
+        "strict": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitAny": true,
+        "declaration": true,
+        "module": "commonjs",
+        "rootDir": "src",
+        "outDir": "dist"
     }
 }

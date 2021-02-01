@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "https://gist.githubusercontent.com/topmastered/2d53b32dd2ff83fcfdbc133a3b151759/raw/05a6337aedd7138df7ee5e83a1252674736c7277/4541VisionTargetSchema.json",
+    "$id": "https://raw.githubusercontent.com/cavineers/DANK/f/WS/schema/4541VisionTargetSchema.json",
     "type": "object",
     "title": "4541VisionTargetSchema",
     "description": "This contains the vision targeting json schema for the 2021 season.",

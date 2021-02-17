@@ -19,6 +19,8 @@ The structure of the types is as follows:
 
 `name` - The name of the message type.
 
+`TypeName` - The member of the Types enum.
+
 `description` - General description of the message.
 
 `direction` - `bidirectional`, `client bound`, or `server bound` are the possible directions in which the message can be sent.
@@ -31,6 +33,8 @@ The structure of the types is as follows:
 
 Name: *Ping*
 
+TypeName: `PING`
+
 Description: *A request the other party to return a [Pong](#01-Pong) message. Used to check if the client/server are connected and both are receiving messages.*
 
 Direction: `bidirectional`
@@ -40,6 +44,8 @@ Content: *The content of this message is never read by the client or the server.
 ### 01-Pong
 
 Name: *Pong*
+
+TypeName: `PONG`
 
 Description: *This is a message returned at the result of a [ping](#00-Ping) message.*
 
@@ -51,6 +57,8 @@ Content: *The content of this message is never read by the client or the server.
 
 Name: *Layout*
 
+TypeName: `LAYOUT`
+
 Description: *This is the layout that should be displayed by the dashboard when it connects to the robot.*
 
 Direction: `client bound`
@@ -60,6 +68,8 @@ Content: *v3Layout*
 ### 03-Message
 
 Name: *Message*
+
+TypeName: `MESSAGE`
 
 Description: *This is just a general message to be printed by either party.*
 
@@ -71,6 +81,8 @@ Content: *A string of the message.*
 
 Name: *Vision*
 
+TypeName: `VISION`
+
 Description: *An array of vision data that is sent to the robot.*
 
 Direction: `server bound`
@@ -80,6 +92,8 @@ Content: *It should follow the vision schema of the defined year.*
 ### 05-Year
 
 Name: *Robot Year*
+
+TypeName: `YEAR`
 
 Description: *Reports the robot year to the client.*
 
@@ -91,6 +105,8 @@ Content: *Numerical year, format: YYYY*
 
 Name: *Robot Name*
 
+TypeName: `NAME`
+
 Description: *Reports the robot name to the client.*
 
 Direction: `client bound`
@@ -100,6 +116,8 @@ Content: *Name is string format*
 ### Template
 
 Name: **
+
+TypeName: ``
 
 Description: **
 

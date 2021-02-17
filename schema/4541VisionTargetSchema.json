@@ -1,111 +1,94 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "https://raw.githubusercontent.com/cavineers/DANK/f/WS/schema/4541VisionTargetSchema.json",
-    "type": "object",
+    "type": "array",
     "title": "4541VisionTargetSchema",
-    "description": "This contains the vision targeting json schema for the 2021 season.",
-    "default": {},
+    "description": "The schema for communicating vision data.",
+    "default": [],
     "examples": [
-        {
-            "timestamp": "2021-02-01T15:19:20.200Z",
-            "targets": [
-                {
-                    "tx": 2.01,
-                    "ty": -5.03,
-                    "td": 122.7
-                }
-            ]
-        }
-    ],
-    "required": [
-        "timestamp",
-        "targets"
-    ],
-    "properties": {
-        "timestamp": {
-            "$id": "#/properties/timestamp",
-            "type": "string",
-            "title": "The timestamp schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-                "2021-02-01T15:19:20.200Z"
-            ]
-        },
-        "targets": {
-            "$id": "#/properties/targets",
-            "type": "array",
-            "title": "The targets schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": [],
-            "examples": [
-                [
-                    {
-                        "tx": 2.01,
-                        "ty": -5.03,
-                        "td": 122.7
-                    }
-                ]
+        [
+            [
+                778.0,
+                539.0,
+                868.0,
+                631.0,
+                0.93143,
+                0.0
             ],
-            "additionalItems": true,
-            "items": {
-                "$id": "#/properties/targets/items",
-                "anyOf": [
-                    {
-                        "$id": "#/properties/targets/items/anyOf/0",
-                        "type": "object",
-                        "title": "The first anyOf schema",
-                        "description": "An explanation about the purpose of this instance.",
-                        "default": {},
-                        "examples": [
-                            {
-                                "tx": 2.01,
-                                "ty": -5.03,
-                                "td": 122.7
-                            }
-                        ],
-                        "required": [
-                            "tx",
-                            "ty",
-                            "td"
-                        ],
-                        "properties": {
-                            "tx": {
-                                "$id": "#/properties/targets/items/anyOf/0/properties/tx",
-                                "type": "number",
-                                "title": "The tx schema",
-                                "description": "An explanation about the purpose of this instance.",
-                                "default": 0.0,
-                                "examples": [
-                                    2.01
-                                ]
-                            },
-                            "ty": {
-                                "$id": "#/properties/targets/items/anyOf/0/properties/ty",
-                                "type": "number",
-                                "title": "The ty schema",
-                                "description": "An explanation about the purpose of this instance.",
-                                "default": 0.0,
-                                "examples": [
-                                    -5.03
-                                ]
-                            },
-                            "td": {
-                                "$id": "#/properties/targets/items/anyOf/0/properties/td",
-                                "type": "number",
-                                "title": "The td schema",
-                                "description": "An explanation about the purpose of this instance.",
-                                "default": 0.0,
-                                "examples": [
-                                    122.7
-                                ]
-                            }
-                        },
-                        "additionalProperties": true
-                    }
-                ]
+            [
+                181.0,
+                416.0,
+                547.0,
+                719.0,
+                0.95821,
+                0.0
+            ]
+        ]
+    ],
+    "additionalItems": false,
+    "items": {
+        "$id": "#/items",
+        "anyOf": [
+            {
+                "$id": "#/items/anyOf/0",
+                "type": "array",
+                "title": "The first anyOf schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": [],
+                "examples": [
+                    [
+                        778.0,
+                        539.0
+                    ]
+                ],
+                "additionalItems": false,
+                "items": {
+                    "$id": "#/items/anyOf/0/items",
+                    "anyOf": [
+                        {
+                            "$id": "#/items/anyOf/0/items/anyOf/0",
+                            "type": "number",
+                            "title": "The first anyOf schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": 0.0,
+                            "examples": [
+                                778.0,
+                                539.0
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "$id": "#/items/anyOf/1",
+                "type": "array",
+                "title": "The second anyOf schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": [],
+                "examples": [
+                    [
+                        181.0,
+                        416.0
+                    ]
+                ],
+                "additionalItems": false,
+                "items": {
+                    "$id": "#/items/anyOf/1/items",
+                    "anyOf": [
+                        {
+                            "$id": "#/items/anyOf/1/items/anyOf/0",
+                            "type": "number",
+                            "title": "The first anyOf schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": 0.0,
+                            "examples": [
+                                181.0,
+                                416.0
+                            ]
+                        }
+                    ]
+                }
             }
-        }
-    },
-    "additionalProperties": true
+        ]
+    }
 }

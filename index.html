@@ -1,22 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>DANK</title>
+<head>
+    <!-- Meta -->
+    <title>DANK</title>
 
-        <!-- CSS -->
-        <link rel="stylesheet" href="./materialize.min.css" />
-        <link rel="stylesheet" href="./app.min.css" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/materialize.min.css">
+    <link rel="stylesheet" href="./css/client.min.css">
 
-        <!-- JS -->
-        <script>
-            exports = {};
-        </script>
-        <script src="./materialize.min.js"></script>
-        <script src="./app.js"></script>
-    </head>
-    <body>
-        <div id="layout"></div>
-    </body>
-</html>
+    <!-- JS -->
+    <script src="./js/materialize.min.js"></script>
+    <script>
+    var exports = {"__esModule": true};
+    const client = new (require("./dist/client.js")).default();
+
+    const { ipcRenderer } = require("electron");
+
+    ipcRenderer.on("update_status", (a,b) => {
+        client.updateStatus(a,b);
+    });
+    </script>
+</head>
+<body>
+    <!-- Boot page -->
+    <div id="boot">
+        <img src="./img/logo.png" alt="" draggable="false">
+        <h1>Cav RPC</h1>
+        <p id="boot-text">Loading...</p>
+    </div>
+
+    <!-- Main page -->
+    <div id="main">
+        <nav class="red" id="nb">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo" id="nbt">Disconnected</a>
+                <ul id="nav-mobile" class="right">
+                    <li><a href="#" data-target="sn" class="sidenav-trigger"><img src="./img/settings-white-48dp.svg" alt=""></a></li>
+                </ul>
+            </div>
+        </nav>
+        <div style="padding:20px;color:#eceff1;">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="text" type="text" class="validate white-text">
+                    <label for="text">Top line</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="text2" type="text" class="validate white-text">
+                    <label for="text2">Bottom line</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6" style="color: white;">
+                    <select class="icons white-text" id="img" style="color: white;">
+                        <option value="none" class="white-text" disabled selected>Select One</option>
+                        <option value="busy" data-icon="./img/block-black-48dp.svg">Busy</option>
+                        <option value="camera" data-icon="./img/camera-black-48dp.svg">Taking Pictures</option>
+                        <option value="sanitize" data-icon="./img/clean_hands-black-48dp.svg">Sanitizing</option>
+                        <option value="code" data-icon="./img/code-black-48dp.svg">Coding</option>
+                        <option value="engineering" data-icon="./img/engineering-black-48dp.svg">Engineering</option>
+                        <option value="paperwork" data-icon="./img/folder-black-48dp.svg">Paper Work</option>
+                        <option value="handywork" data-icon="./img/handyman-black-48dp.svg">Handy Work</option>
+                        <option value="video" data-icon="./img/movie_creation-black-48dp.svg">Video</option>
+                        <option value="driving" data-icon="./img/sports_motorsports-black-48dp.svg">Driving the bot</option>
+                        <option value="scouting" data-icon="./img/tablet_android-black-48dp.svg">Scouting</option>
+                    </select>
+                    <label class="white-text">Image</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="switch">
+                    <label>
+                        Off
+                        <input type="checkbox" id="e">
+                        <span class="lever"></span>
+                        On
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn btn-large col s12" id="update">Update</button>
+            </div>
+        </div>
+    </div>
+
+    <ul class="sidenav grey darken-3" id="sn" style="width:425px !important;">
+        <li style="text-align: left;" id="close-nav"><a href="#" style="color: white;text-align: center;"><strong>Close</strong></a></li>
+        <li><div class="divider"></div></li>
+        <li style="height:100px !important;line-height: 19px !important;">
+            <div class="row">
+                <div class="input-field col s12 m6" style="color: rgb(121, 121, 121);">
+                    <select class="white-text" id="branch" style="color: rgb(121, 121, 121);">
+                        <option value="latest" selected>Stable (Recommended)</option>
+                        <option value="beta">Beta (Early access)</option>
+                        <option value="alpha">Alpha (Unstable, may brick your entire install)</option>
+                    </select>
+                    <label class="white-text">Update Branch</label>
+                </div>
+            </div>
+        </li>
+        <li style="height:100px !important;line-height: 19px !important;">
+            <div class="row">
+                <div class="input-field col s12 m6" style="color: rgb(121, 121, 121);">
+                    <select class="white-text" id="theme" style="color: rgb(121, 121, 121);">
+                        <option value="latest" selected>Dark</option>
+                    </select>
+                    <label class="white-text">Theme</label>
+                </div>
+            </div>
+        </li>
+        <li><div class="divider"></div></li>
+        <li>Version: v<strong id="v"></strong></li>
+        <li>Copyright &copy; 2020 FRC Team 4541</li>
+    </ul>      
+
+</body>

@@ -1,0 +1,17 @@
+{
+    "firstBoot": {
+        "type": "boolean"
+    },
+    "top": {
+        "type": "string"
+    },
+    "bottom": {
+        "type": "string"
+    },
+    "image": {
+        "type": "string"
+    },
+    "branch": {
+        "type": "string"
+    }
+}

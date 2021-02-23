@@ -1,39 +1,105 @@
-const electron = require("electron");
-const path = require("path");
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-const url = require("url");
+// Import
+const { app, BrowserWindow } = require("electron");
+const { autoUpdater } = require("electron-updater");
+const log = require("electron-log");
+const fs = require("fs");
+const Path = require("path");
+const Store = require("electron-store");
 
+// Main window
 let mainWindow;
 
-function createWindow() {
-    mainWindow = new BrowserWindow({ width: 1000, height: 800, webPreferences: { nodeIntegration: true }, resizable: true, maximizable: true });
-    mainWindow.loadURL(
-        url.format({
-            pathname: path.join(__dirname, "index.html"),
-            protocol: "file:",
-            slashes: true
-        })
-    );
-    mainWindow.maximize();
-    mainWindow.setMenu(null);
-    mainWindow.webContents.openDevTools();
-    mainWindow.setIcon(path.join(__dirname, "img", "4541-logo-2.ico"));
-    mainWindow.on("closed", function() {
-        mainWindow = null;
-    });
+// Development
+let isDev = () => {
+    return process.argv.includes("--dev");
+};
+
+// Auto update status
+const sendStatusToWindow = (args) => {
+    log.info(args);
+    if (mainWindow) {
+        mainWindow.webContents.send("update_status", args);
+    }
+};
+
+// Log dev mode
+if (isDev()) {
+    log.info("Running in development mode");
 }
 
-app.on("ready", createWindow);
+// Store
+let schema = JSON.parse(fs.readFileSync(Path.join(__dirname, "schema", "db.schema.json"), "utf-8"));
+let store = new Store({ schema: schema, fileExtension: "db", clearInvalidConfig: true, accessPropertiesByDotNotation: true });
 
-app.on("window-all-closed", function() {
+// Create window when ready
+app.on("ready", () => {
+    log.info("Copyright © 2020 FRC Team 4541");
+    log.info(`Version: v${app.getVersion()}`);
+    log.info("Ready, starting app");
+    mainWindow = new BrowserWindow({
+        width: 500,
+        height: 540,
+        resizable: false,
+        webPreferences: {
+            nodeIntegration: true,
+            enableRemoteModule: true,
+        },
+        titleBarStyle: "hiddenInset",
+    });
+    mainWindow.setMenu(null);
+    mainWindow.loadFile("index.html");
+    mainWindow.on("closed", function () {
+        mainWindow = null;
+    });
+    mainWindow.once("ready-to-show", () => {
+        if (isDev()) {
+            log.info("Opening dev tools");
+            mainWindow.webContents.openDevTools({ mode: "detach" });
+            setTimeout(() => {
+                sendStatusToWindow({ text: "Update not available.", code: 2 });
+            }, 1000);
+        } else {
+            log.info("In production, checking for updates");
+            autoUpdater.channel = store.has("branch") ? store.get("branch") : "latest";
+            autoUpdater.autoInstallOnAppQuit = false;
+            autoUpdater.checkForUpdatesAndNotify();
+        }
+    });
+});
+
+app.on("window-all-closed", function () {
     if (process.platform !== "darwin") {
         app.quit();
     }
 });
 
-app.on("activate", function() {
+app.on("activate", function () {
     if (mainWindow === null) {
         createWindow();
     }
+});
+
+// Auto updates
+autoUpdater.on("checking-for-update", () => {
+    sendStatusToWindow({ text: "Checking for update...", code: 0 });
+});
+autoUpdater.on("update-available", () => {
+    sendStatusToWindow({ text: "Update available.", code: 1 });
+});
+autoUpdater.on("update-not-available", () => {
+    sendStatusToWindow({ text: "Update not available.", code: 2 });
+});
+autoUpdater.on("error", (err) => {
+    sendStatusToWindow({ text: `Error in auto-updater: ${err.toString()}`, code: -1 });
+});
+autoUpdater.on("download-progress", (progressObj) => {
+    sendStatusToWindow({ code: 3, total: progressObj.total, current: progressObj.transferred, percent: progressObj.percent });
+});
+
+autoUpdater.on("update-downloaded", () => {
+    sendStatusToWindow({ code: 4 });
+
+    setTimeout(() => {
+        autoUpdater.quitAndInstall();
+    }, 5000);
 });

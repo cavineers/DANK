@@ -1,19 +1,34 @@
-import * as path from "path";
-import NT from "./../nt";
-
-export default class v2Layout {
-    private data: any;
-    private html: string = "";
-    private listenFor = [];
-    private nt: NT;
-
-    constructor(data: any, nt: NT) {
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const path = __importStar(require("path"));
+class v2Layout {
+    constructor(data, nt) {
+        this.html = "";
+        this.listenFor = [];
         this.data = data;
         this.nt = nt;
     }
-
-    public build(): v2Layout {
-        this.data.layout.forEach((element: any) => {
+    build() {
+        this.data.layout.forEach((element) => {
             switch (element.type) {
                 case "CameraStream":
                     let CameraStream = document.createElement("img");
@@ -21,12 +36,14 @@ export default class v2Layout {
                     CameraStream.style.position = "absolute";
                     if (element.xReversed == undefined || element.xReversed == false) {
                         CameraStream.style.left = element.x;
-                    } else {
+                    }
+                    else {
                         CameraStream.style.right = element.x;
                     }
                     if (element.yReversed == undefined || element.yReversed == false) {
                         CameraStream.style.top = element.y;
-                    } else {
+                    }
+                    else {
                         CameraStream.style.bottom = element.y;
                     }
                     if (element.z != undefined) {
@@ -43,12 +60,14 @@ export default class v2Layout {
                     StaticText.style.position = "absolute";
                     if (element.xReversed == undefined || element.xReversed == false) {
                         StaticText.style.left = element.x;
-                    } else {
+                    }
+                    else {
                         StaticText.style.right = element.x;
                     }
                     if (element.yReversed == undefined || element.yReversed == false) {
                         StaticText.style.top = element.y;
-                    } else {
+                    }
+                    else {
                         StaticText.style.bottom = element.y;
                     }
                     if (element.z != undefined) {
@@ -64,12 +83,14 @@ export default class v2Layout {
                     Container.style.position = "absolute";
                     if (element.xReversed == undefined || element.xReversed == false) {
                         Container.style.left = element.x;
-                    } else {
+                    }
+                    else {
                         Container.style.right = element.x;
                     }
                     if (element.yReversed == undefined || element.yReversed == false) {
                         Container.style.top = element.y;
-                    } else {
+                    }
+                    else {
                         Container.style.bottom = element.y;
                     }
                     if (element.z != undefined) {
@@ -86,7 +107,8 @@ export default class v2Layout {
                     Image.style.position = "absolute";
                     if (element.xReversed == undefined || element.xReversed == false) {
                         Image.style.left = element.x;
-                    } else {
+                    }
+                    else {
                         Image.style.right = element.x;
                     }
                     if (element.z != undefined) {
@@ -94,7 +116,8 @@ export default class v2Layout {
                     }
                     if (element.yReversed == undefined || element.yReversed == false) {
                         Image.style.top = element.y;
-                    } else {
+                    }
+                    else {
                         Image.style.bottom = element.y;
                     }
                     if (element.style != undefined) {
@@ -109,12 +132,14 @@ export default class v2Layout {
                     DynamicText.id = this.genID();
                     if (element.xReversed == undefined || element.xReversed == false) {
                         DynamicText.style.left = element.x;
-                    } else {
+                    }
+                    else {
                         DynamicText.style.right = element.x;
                     }
                     if (element.yReversed == undefined || element.yReversed == false) {
                         DynamicText.style.top = element.y;
-                    } else {
+                    }
+                    else {
                         DynamicText.style.bottom = element.y;
                     }
                     if (element.z != undefined) {
@@ -131,12 +156,14 @@ export default class v2Layout {
                     AllianceContainer.style.position = "absolute";
                     if (element.xReversed == undefined || element.xReversed == false) {
                         AllianceContainer.style.left = element.x;
-                    } else {
+                    }
+                    else {
                         AllianceContainer.style.right = element.x;
                     }
                     if (element.yReversed == undefined || element.yReversed == false) {
                         AllianceContainer.style.top = element.y;
-                    } else {
+                    }
+                    else {
                         AllianceContainer.style.bottom = element.y;
                     }
                     if (element.z != undefined) {
@@ -147,7 +174,8 @@ export default class v2Layout {
                     }
                     if (this.nt.getValue("/FMSInfo/IsRedAlliance")) {
                         AllianceContainer.style.backgroundColor = "red";
-                    } else {
+                    }
+                    else {
                         AllianceContainer.style.backgroundColor = "blue";
                     }
                     this.html += this.elemString(AllianceContainer);
@@ -156,29 +184,24 @@ export default class v2Layout {
                     throw new Error("Unknown layout module");
             }
         });
-
         return this;
     }
-
-    public display(): v2Layout {
+    display() {
         document.getElementById("layout").innerHTML = this.html;
         return this;
     }
-
-    private elemString(node: HTMLElement) {
+    elemString(node) {
         let tmpNode = document.createElement("div");
         tmpNode.appendChild(node.cloneNode(true));
         let str = tmpNode.innerHTML;
         return str;
     }
-
-    private genID(): string {
+    genID() {
         return "_" + Math.random().toString(36).substr(2, 9);
     }
-
-    public periodic(): void {
+    periodic() {
         this.listenFor.forEach((ele) => {
-            let data: any = this.nt.getValue(ele.key);
+            let data = this.nt.getValue(ele.key);
             if (ele.key == "/DankDash/MatchTime") {
                 data = `${Math.floor(data / 60)}:${"0".repeat(data % 60 < 10 ? 1 : 0)}${data % 60}`;
             }
@@ -186,3 +209,4 @@ export default class v2Layout {
         });
     }
 }
+exports.default = v2Layout;

@@ -1,0 +1,38 @@
+html, body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0px;
+    font-family: sans-serif;
+    background-color: #212121;
+    text-align: center;
+    input.select-dropdown {
+        color:rgb(151, 151, 151) !important;
+    }
+    #boot {
+        text-align:center;
+        color:#fafafa;
+        padding:0px 40px;
+        user-select: none;
+        #boot-text {
+            color:#9e9e9e;
+        }
+        img {
+            width:85vw;
+        }
+    }
+    #connect-wait {
+        text-align: center !important;
+        color:#fafafa;
+        padding:0px 40px;
+        user-select: none;
+        display: none;
+        text-align: left;
+        width:100vw;
+        height:100vw;
+        overflow: hidden;
+    }
+    #main {
+        display: none;
+        text-align: left;
+    }
+}

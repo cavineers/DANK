@@ -33,12 +33,12 @@ let store = new Store({ schema: schema, fileExtension: "db", clearInvalidConfig:
 
 // Create window when ready
 app.on("ready", () => {
-    log.info("Copyright © 2020 FRC Team 4541");
+    log.info("Copyright © 2021 FRC Team 4541");
     log.info(`Version: v${app.getVersion()}`);
     log.info("Ready, starting app");
     mainWindow = new BrowserWindow({
-        width: 500,
-        height: 540,
+        width: 300,
+        height: 350,
         resizable: false,
         webPreferences: {
             nodeIntegration: true,

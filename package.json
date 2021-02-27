@@ -15,24 +15,27 @@
         "deploy": "electron-builder build --linux --win --publish always",
         "build": "electron-builder build --linux --win --publish never"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cavineers/DANK"
+    },
     "keywords": [],
     "author": "",
     "license": "MIT",
     "devDependencies": {
-        "@types/discord-rpc": "3.0.4",
         "@types/materialize-css": "1.0.8",
-        "@types/mousetrap": "1.6.3",
-        "@types/node": "^12.12.29",
-        "electron": "11.2.1",
+        "@types/mousetrap": "1.6.5",
+        "@types/node": "14.14.31",
         "electron-builder": "22.9.1"
     },
     "dependencies": {
         "dotenv": "8.2.0",
-        "electron-log": "4.3.0",
-        "electron-store": "6.0.1",
+        "electron": "11.3.0",
+        "electron-log": "4.3.2",
+        "electron-store": "7.0.2",
         "electron-updater": "4.3.5",
         "mousetrap": "1.6.5",
-        "wpilib-nt-client": "^1.7.2"
+        "wpilib-nt-client": "1.7.2"
     },
     "build": {
         "appId": "com.cavineers.dank",

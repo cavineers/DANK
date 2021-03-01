@@ -3,10 +3,10 @@ import { IpcRendererEvent } from "electron";
 import Store from "electron-store";
 import * as fs from "fs";
 import * as Path from "path";
+import Connection from "./Connection";
 
 export default class Client {
-    private schema = JSON.parse(fs.readFileSync(Path.join(__dirname, "..", "schema", "db.schema.json"), "utf-8"));
-    private store: Store = new Store({ schema: this.schema, fileExtension: "db", clearInvalidConfig: true, accessPropertiesByDotNotation: true });
+    private m_connection = new Connection();
 
     constructor() {
         console.log("Copyright © 2021 FRC Team 4541");
@@ -36,6 +36,8 @@ export default class Client {
                 (<HTMLDivElement>document.getElementById("boot")).style.display = "none";
 
                 (<HTMLDivElement>document.getElementById("connect-wait")).style.display = "block";
+
+                this.connect();
                 break;
             case 3:
                 b.innerHTML = `<div class="progress"><div class="determinate red" style="width: ${args.percent}%"></div></div><div style="text-align:center;" class="grey-text">${args.current}/${args.total}</div>`;
@@ -47,5 +49,9 @@ export default class Client {
                 console.warn("Unknown status_update status code");
                 break;
         }
+    }
+
+    private connect() {
+        this.m_connection.connect();
     }
 }

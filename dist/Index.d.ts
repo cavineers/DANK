@@ -1,7 +1,7 @@
 import { IpcRendererEvent } from "electron";
 export default class Client {
-    private schema;
-    private store;
+    private m_connection;
     constructor();
     updateStatus(e: IpcRendererEvent, args: any): void;
+    private connect;
 }

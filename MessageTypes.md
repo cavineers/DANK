@@ -113,6 +113,18 @@ Direction: `client bound`
 
 Content: *Name is string format*
 
+### 07-AutoPathTime
+
+Name: *Autonomous Path Completion Time*
+
+TypeName: `AUTO_PATH_TIME`
+
+Description: *Gives DANK the amount of time it took to complete the autonomous path.*
+
+Direction: `client bound`
+
+Content: *Time, in a double format.*
+
 ### Template
 
 Name: **

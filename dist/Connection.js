@@ -59,14 +59,6 @@ class Connection extends events_1.default {
                     break;
             }
         });
-        // setTimeout(() => {
-        //     if (this.m_connection?.readyState != WebSocket.OPEN) {
-        //         console.log(`Timeout reached for ${this.m_addresses[this.m_currentAddr]}`);
-        //         this.m_connection?.close();
-        //         this.m_currentAddr = this.m_currentAddr + 1 == this.m_addresses.length ? 0 : this.m_currentAddr + 1;
-        //         this.connect();
-        //     }
-        // }, 5000);
     }
 }
 exports.default = Connection;

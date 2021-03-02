@@ -125,6 +125,18 @@ Direction: `client bound`
 
 Content: *Time, in a double format.*
 
+### 08-VisionNotifier
+
+Name: *Vision Notifier*
+
+TypeName: `VISION_NOTIFIER`
+
+Description: *Notifies the robot that this client is the vision code.*
+
+Direction: `server bound`
+
+Content: *The content of this message is never read by the client or the server.*
+
 ### Template
 
 Name: **

@@ -27,6 +27,8 @@ export default class Connection extends EventEmitter {
 
         this.m_connection.addEventListener("close", (event) => {
             console.log("closed", event);
+
+            this.emit("closed");
         });
 
         this.m_connection.addEventListener("error", (event) => {
@@ -47,6 +49,8 @@ export default class Connection extends EventEmitter {
             let type: string = message.data.substring(0, 2);
             let content: string = message.data.substring(3);
 
+            console.log(type);
+
             switch (type) {
                 case "00":
                     this.m_connection?.send("01;pong");
@@ -55,16 +59,19 @@ export default class Connection extends EventEmitter {
                     this.m_connection?.send("01;ping");
                     break;
                 case "02":
-                    let layout = content;
+                    this.emit("02", content);
+                    console.log("02");
                     break;
                 case "03":
-                    console.log("message", content);
+                    console.log("03", content);
+                    this.emit("message", message);
                     break;
                 case "05":
                     console.log("robot year", content);
                     break;
                 case "06":
                     console.log("robot name", content);
+                    this.emit("06", content);
                     break;
                 default:
                     break;

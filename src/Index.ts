@@ -1,12 +1,18 @@
 // Import
-import { IpcRendererEvent } from "electron";
+import { IpcRendererEvent, remote } from "electron";
 import Store from "electron-store";
 import * as fs from "fs";
 import * as Path from "path";
 import Connection from "./Connection";
-
+import { Remote } from "electron";
+import LayoutV3 from "./layouts/LayoutV3";
 export default class Client {
     private m_connection = new Connection();
+
+    private m_name: string = "";
+    private m_address: string = "";
+
+    private m_layout?: LayoutV3;
 
     constructor() {
         console.log("Copyright © 2021 FRC Team 4541");
@@ -53,5 +59,58 @@ export default class Client {
 
     private connect() {
         this.m_connection.connect();
+
+        this.m_connection.on("connected", (data: { address: string }) => {
+            remote.getCurrentWindow().setResizable(true);
+            remote.getCurrentWindow().maximize();
+            remote.getCurrentWindow().setSize(1280, 780);
+            (<HTMLDivElement>document.getElementById("main")).style.display = "block";
+
+            (<HTMLDivElement>document.getElementById("connect-wait")).style.display = "none";
+
+            M.toast({ html: `Connected to ${data.address}` });
+            this.m_address = data.address;
+            this.updateRobot();
+        });
+
+        this.m_connection.on("02", (content) => {
+            try {
+                content = JSON.parse(content);
+
+                console.log(content);
+                if (content.version == "v3") {
+                    this.m_layout = new LayoutV3(content.layout);
+                }
+            } catch (error) {
+                console.log(error);
+                M.toast({ html: "There is an error in this layout." });
+            }
+        });
+
+        this.m_connection.on("message", (message: string) => {
+            M.toast({ html: message });
+        });
+
+        this.m_connection.on("06", (message: string) => {
+            M.toast({ html: `Connected to ${message}` });
+            this.m_name = message;
+            this.updateRobot();
+        });
+
+        this.m_connection.on("closed", () => {
+            M.toast({ html: `Disconnected from ${this.m_name}` });
+            (<HTMLDivElement>document.getElementById("content")).innerHTML = "";
+
+            this.m_name = "";
+            this.m_address = "";
+
+            this.m_layout?.reset();
+
+            this.updateRobot();
+        });
+    }
+
+    private updateRobot() {
+        (<HTMLDivElement>document.getElementById("robot")).innerText = `${this.m_name} (${this.m_address})`;
     }
 }

@@ -51,7 +51,7 @@ class Connection extends events_1.default {
                     break;
                 case "03":
                     console.log("03", content);
-                    this.emit("message", message);
+                    this.emit("message", content);
                     break;
                 case "05":
                     console.log("robot year", content);
